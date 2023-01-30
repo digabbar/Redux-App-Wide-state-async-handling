@@ -1,42 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const uiSlice = createSlice({
+const initialState = {
+  showCart: false,
+  notification: null,
+};
+export const uiSlice = createSlice({
   name: "ui",
-  initialState: {
-    cartIsVisible: false,
-    notification: {},
-  },
+  initialState,
   reducers: {
-    toggle(state) {
-      state.cartIsVisible = !state.cartIsVisible;
+    toggleCart: (state, action) => {
+      state.showCart = !state.showCart;
     },
-    req: (state, action) => {
+    notifs: (state, action) => {
       state.notification = {
-        status: "pending",
-        title: "Pending",
-        message: "requesting",
+        status: action.payload.status,
+        title: action.payload.title,
+        message: action.payload.message,
       };
     },
-    success: (state, action) => {
-      state.notification = {
-        status: "success",
-        title: "Successfull",
-        message: "request send successfully",
-      };
-    },
-    error: (state, action) => {
-      state.notification = {
-        status: "error",
-        title: "Failure",
-        message: "request failed",
-      };
-    },
-    reset: (state, action) => {
-      state.notification = {};
+    clearNotifs: (state, action) => {
+      state.notification = null;
     },
   },
 });
-
-export const uiActions = uiSlice.actions;
-
-export default uiSlice;
+export const uiAction = uiSlice.actions;
+export default uiSlice.reducer;
